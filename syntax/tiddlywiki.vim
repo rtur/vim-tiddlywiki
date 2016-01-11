@@ -26,7 +26,8 @@ syn match twUnderline /__.\{-}__/ contains=@Spell
 syn match twStrikethrough /--.\{-}--/ contains=@Spell
 syn match twHighlight /@@.\{-}@@/
 syn match twNoFormatting /{{{.\{-}}}}/ contains=@Spell
-syn match twCodeblockTag /^```\i*$/ contains=@Spell
+syn match twCodeblockTag /^```\i*$/
+syn match twCode /`[^`]\+`/
 
 " Heading
 syn match twHeading /^!\+\s*.*$/ contains=@Spell
@@ -81,6 +82,7 @@ hi def link twStrikethrough Ignore
 hi def link twHighlight Todo
 hi def link twNoFormatting Constant
 hi def link twCodeblockTag Constant
+hi def link twCode Constant
 hi def link twHeading Title
 hi def link twComment Comment
 hi def link twList Structure
