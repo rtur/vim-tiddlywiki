@@ -13,11 +13,13 @@ let s:save_cpo = &cpo
 set cpo-=C
 
 function! s:UpdateModifiedTime()
-  let save_cursor = getcurpos()
-  let time = system("date -u +'%Y%m%d%H%M%S'")[:-2]
-  silent 0,/^\s*$/global/^modified: / delete
-  call append(0, "modified: " . time)
-  call setpos('.', save_cursor)
+  if &modified
+    let save_cursor = getcurpos()
+    let time = system("date -u +'%Y%m%d%H%M%S'")[:-2]
+    silent 0,/^\s*$/global/^modified: / delete
+    call append(0, "modified: " . time)
+    call setpos('.', save_cursor)
+  endif
 endfunction
 
 augroup tiddlywiki
