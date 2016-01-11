@@ -50,6 +50,8 @@ syn match twTable /|/
 
 " Link
 syn region twLink start=/\[\[/ end=/\]\]/
+syn match twCamelCaseLink /[^~]\<[A-Z][a-z0-9]\+[A-Z][[:alnum:]]*\>/
+syn match twUrlLink /\<\(https\=\|ftp\|file\):\S*/
 
 syn match twString /["'][^"']*["']/ contained extend contains=@Spell
 syn match twTransclude /{{[^{}]\{-}}}/
@@ -87,6 +89,8 @@ hi def link twDefinitionListDescription String
 hi def link twBlockquote Repeat
 hi def link twTable Label
 hi def link twLink Typedef
+hi def link twCamelCaseLink Typedef
+hi def link twUrlLink Typedef
 hi def link twTransclude Label
 hi def link twWidgetStartTag Structure
 hi def link twWidgetAttr Identifier
