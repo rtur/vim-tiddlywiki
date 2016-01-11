@@ -54,17 +54,18 @@ syn region twLink start=/\[\[/ end=/\]\]/
 syn match twCamelCaseLink /[^~]\<[A-Z][a-z0-9]\+[A-Z][[:alnum:]]*\>/
 syn match twUrlLink /\<\(https\=\|ftp\|file\):\S*/
 
-syn match twString /["'][^"']*["']/ contained extend contains=@Spell
+syn match twStringSingle /'[^']*'/ contained extend contains=@Spell
+syn match twStringDouble /"[^"]*"/ contained extend contains=@Spell
 syn match twTransclude /{{[^{}]\{-}}}/
 
-syn region twWidgetStartTag start=/<\$\=\i\+/ end=/>/ contains=twWidgetAttr,twMacro,twTransclude,twString
+syn region twWidgetStartTag start=/<\$\=\i\+/ end=/>/ contains=twWidgetAttr,twMacro,twTransclude,twStringDouble,twStringSingle
 syn match  twWidgetAttr /\s\i\+=/ contained
 syn match  twWidgetEndTag /<\/$\=\i\+>/
 
 syn match twFieldsLine /^[[:alnum:]_-]\+:\s\+.*$/ contains=twFieldsKey
 syn match twFieldsKey /^[[:alnum:]_-]\+:/ contained
 
-syn match twMacro /<<.\{-}>>/ contains=twString
+syn match twMacro /<<.\{-}>>/ contains=twStringDouble,twStringSingle
 syn match twMacroDefineStart /^\s*\\define\s\+\i\+(\i*)/ contains=twMacroDefineName,twMacroDefineVar
 syn match twMacroDefineName /\i\+(\i*)/ contained contains=twMacroDefineArg
 syn region twMacroDefineArg start=/(/ms=s+1 end=/)/me=e-1 contained
@@ -97,7 +98,8 @@ hi def link twTransclude Label
 hi def link twWidgetStartTag Structure
 hi def link twWidgetAttr Identifier
 hi def link twWidgetEndTag Structure
-hi def link twString String
+hi def link twStringSingle String
+hi def link twStringDouble String
 hi def link twFieldsLine String
 hi def link twFieldsKey Identifier
 hi def link twMacro Label
