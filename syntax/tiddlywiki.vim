@@ -15,6 +15,7 @@ elseif exists("b:current_syntax")
   finish
 endif
 
+setlocal isident+=-
 
 """ Patterns
 syn spell toplevel
@@ -62,8 +63,8 @@ syn region twWidgetStartTag start=/<\$\=\i\+/ end=/>/ contains=twWidgetAttr,twMa
 syn match  twWidgetAttr /\s\i\+=/ contained
 syn match  twWidgetEndTag /<\/$\=\i\+>/
 
-syn match twFieldsLine /^[[:alnum:]_-]\+:\s\+.*$/ contains=twFieldsKey
-syn match twFieldsKey /^[[:alnum:]_-]\+:/ contained
+syn match twFieldsLine /^\i\+:\s\+.*$/ contains=twFieldsKey
+syn match twFieldsKey /^\i\+:/ contained
 
 syn match twMacro /<<.\{-}>>/ contains=twStringDouble,twStringSingle
 syn match twMacroDefineStart /^\s*\\define\s\+\i\+(\i*)/ contains=twMacroDefineName,twMacroDefineVar
