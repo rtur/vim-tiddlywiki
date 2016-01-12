@@ -9,10 +9,10 @@
 """ Initial checks
 " To be compatible with Vim 5.8. See `:help 44.12`
 if version < 600
-    syntax clear
+  syntax clear
 elseif exists("b:current_syntax")
-    " Quit when a (custom) syntax file was already loaded
-    finish
+  " Quit when a (custom) syntax file was already loaded
+  finish
 endif
 
 
