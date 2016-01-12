@@ -67,7 +67,7 @@ syn match twFieldsLine /^\i\+:\s\+.*$/ contains=twFieldsKey
 syn match twFieldsKey /^\i\+:/ contained
 
 syn match twMacro /<<.\{-}>>/ contains=twStringDouble,twStringSingle
-syn match twMacroDefineStart /^\s*\\define\s\+\i\+(\i*)/ contains=twMacroDefineName,twMacroDefineVar
+syn match twMacroDefineStart /^\s*\\\(define\|rules\)\s\+\i\+(\i*)/ contains=twMacroDefineName
 syn match twMacroDefineName /\i\+(\i*)/ contained contains=twMacroDefineArg
 syn region twMacroDefineArg start=/(/ms=s+1 end=/)/me=e-1 contained
 syn match twMacroDefineEnd /^\s*\\end/
