@@ -40,7 +40,7 @@ function! s:InitializeTemplate()
   call append(6, "")
 endfunction
 
-if !exists("g:tiddlywiki_no_autoupdate")
+if exists("g:tiddlywiki_autoupdate")
   augroup tiddlywiki
     au BufWrite, *.tid call <SID>AutoUpdateModifiedTime()
   augroup END
