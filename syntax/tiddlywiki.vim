@@ -67,10 +67,22 @@ syn match twFieldsLine /^\i\+:\s\+.*$/ contains=twFieldsKey
 syn match twFieldsKey /^\i\+:/ contained
 
 syn match twMacro /<<.\{-}>>/ contains=twStringDouble,twStringSingle
-syn match twMacroDefineStart /^\s*\\\(define\|rules\)\s\+\i\+(\i*)/ contains=twMacroDefineName
+syn match twMacroDefineStart /^\s*\\define\s\+\i\+(\i*)/ contains=twMacroDefineName
 syn match twMacroDefineName /\i\+(\i*)/ contained contains=twMacroDefineArg
 syn region twMacroDefineArg start=/(/ms=s+1 end=/)/me=e-1 contained
 syn match twMacroDefineEnd /^\s*\\end/
+
+syn match twRulesPragma /^\s*\\rules.*$/ contains=twRulesIntent,twRulesValue
+syn keyword twRulesIntent except only contained
+syn keyword twRulesValue macrodef bold codeinline commentinline dash contained
+syn keyword twRulesValue entity extlink filteredtranscludeinline contained
+syn keyword twRulesValue hardlinebreaks html image italic macrocallinline contained
+syn keyword twRulesValue prettyextlink prettylink strikethrough styleinline contained
+syn keyword twRulesValue subscript superscript syslink transcludeinline contained
+syn keyword twRulesValue underscore wikilink codeblock commentblock contained
+syn keyword twRulesValue filteredtranscludeblock heading horizrule html list contained
+syn keyword twRulesValue macrocallblock quoteblock styleblock table contained
+syn keyword twRulesValue transcludeblock typedblock contained
 
 syn match twVariable /\$(\=\i\+)\=\$/
 
@@ -108,4 +120,7 @@ hi def link twMacroDefineStart Typedef
 hi def link twMacroDefineName Label
 hi def link twMacroDefineArg Identifier
 hi def link twMacroDefineEnd Typedef
+hi def link twRulesPragma Typedef
+hi def link twRulesIntent Label
+hi def link twRulesValue Identifier
 hi def link twVariable Identifier
