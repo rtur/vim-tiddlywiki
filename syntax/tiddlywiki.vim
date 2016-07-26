@@ -20,59 +20,7 @@ setlocal isident+=-
 """ Patterns
 syn spell toplevel
 
-" Emphasis
-syn match twItalic /\/\/.\{-}\/\// contains=@Spell
-syn match twBold /''.\{-}''/ contains=@Spell
-syn match twUnderline /__.\{-}__/ contains=@Spell
-syn match twStrikethrough /--.\{-}--/ contains=@Spell
-syn match twHighlight /@@.\{-}@@/
-syn match twNoFormatting /{{{.\{-}}}}/ contains=@Spell
-syn match twCodeblockTag /^```\i*$/
-syn match twCode /`[^`]\+`/
-
-" Heading
-syn match twHeading /^!\+\s*.*$/ contains=@Spell
-
-" Comment
-syn region twComment start=/<!--/ end=/-->/ contains=@Spell
-
-" Lists
-syn match twList /^[\*#]\+/
-
-" Definition list
-syn match twDefinitionListTerm /^;.\+$/ contains=@Spell
-syn match twDefinitionListDescription /^:.\+$/ contains=@Spell
-
-" Blockquotes
-syn match twBlockquote /^>\+.\+$/ contains=@Spell
-syn region twBlockquote start=/^<<</ end=/^<<</ contains=@Spell
-
-" Table
-syn match twTable /|/
-
-" Link
-syn region twLink start=/\[\[/ end=/\]\]/
-syn match twCamelCaseLink /[^~]\<[A-Z][a-z0-9]\+[A-Z][[:alnum:]]*\>/
-syn match twUrlLink /\<\(https\=\|ftp\|file\):\S*/
-syn match twImgLink /\[img.\{-}\[.\{-}\]\]/ contains=twWidgetAttr,twStringDouble,twStringSingle
-
-syn match twStringSingle /'[^']*'/ contained extend contains=@Spell
-syn match twStringDouble /"[^"]*"/ contained extend contains=@Spell
-syn match twTransclude /{{[^{}]\{-}}}/
-
-syn region twWidgetStartTag start=/<\$\=\i\+/ end=/>/ contains=twWidgetAttr,twMacro,twTransclude,twStringDouble,twStringSingle
-syn match  twWidgetAttr /\s\i\+=/ contained
-syn match  twWidgetEndTag /<\/$\=\i\+>/
-
-syn match twFieldsLine /^\i\+:\s\+.*$/ contains=twFieldsKey
-syn match twFieldsKey /^\i\+:/ contained
-
-syn match twMacro /<<.\{-}>>/ contains=twStringDouble,twStringSingle
-syn match twMacroDefineStart /^\s*\\define\s\+\i\+(\i*)/ contains=twMacroDefineName
-syn match twMacroDefineName /\i\+(\i*)/ contained contains=twMacroDefineArg
-syn region twMacroDefineArg start=/(/ms=s+1 end=/)/me=e-1 contained
-syn match twMacroDefineEnd /^\s*\\end/
-
+" Rules
 syn match twRulesPragma /^\s*\\rules.*$/ contains=twRulesIntent,twRulesValue
 syn keyword twRulesIntent except only contained
 syn keyword twRulesValue macrodef bold codeinline commentinline dash contained
@@ -85,7 +33,63 @@ syn keyword twRulesValue filteredtranscludeblock heading horizrule html list con
 syn keyword twRulesValue macrocallblock quoteblock styleblock table contained
 syn keyword twRulesValue transcludeblock typedblock contained
 
+" Macros
+syn match twMacro /<<.\{-}>>/ contains=twStringDouble,twStringSingle
+syn match twMacroDefineStart /^\s*\\define\s\+\i\+(\i*)/ contains=twMacroDefineName
+syn match twMacroDefineName /\i\+(\i*)/ contained contains=twMacroDefineArg
+syn region twMacroDefineArg start=/(/ms=s+1 end=/)/me=e-1 contained
+syn match twMacroDefineEnd /^\s*\\end/
 syn match twVariable /\$(\=\i\+)\=\$/
+
+" Header Fields
+syn match twFieldsLine /^\i\+:\s\+.*$/ contains=twFieldsKey
+syn match twFieldsKey /^\i\+:/ contained
+
+" Widgets
+syn region twWidgetStartTag start=/<\$\=\i\+/ end=/>/ contains=twWidgetAttr,twMacro,twTransclude,twStringDouble,twStringSingle
+syn match  twWidgetAttr /\s\i\+=/ contained
+syn match  twWidgetEndTag /<\/$\=\i\+>/
+
+" Strings
+syn match twStringSingle /'[^']*'/ contained extend contains=@Spell
+syn match twStringDouble /"[^"]*"/ contained extend contains=@Spell
+syn match twTransclude /{{[^{}]\{-}}}/
+
+" Link
+syn region twLink start=/\[\[/ end=/\]\]/
+syn match twCamelCaseLink /[^~]\<[A-Z][a-z0-9]\+[A-Z][[:alnum:]]*\>/
+syn match twUrlLink /\<\(https\=\|ftp\|file\):\S*/
+syn match twImgLink /\[img.\{-}\[.\{-}\]\]/ contains=twWidgetAttr,twStringDouble,twStringSingle
+
+" Table
+syn match twTable /|/
+
+" Blockquotes
+syn match twBlockquote /^>\+.\+$/ contains=@Spell
+syn region twBlockquote start=/^<<</ end=/^<<</ contains=@Spell
+
+" Definition list
+syn match twDefinitionListTerm /^;.\+$/ contains=@Spell
+syn match twDefinitionListDescription /^:.\+$/ contains=@Spell
+
+" Lists
+syn match twList /^[\*#]\+/
+
+" Comment
+syn region twComment start=/<!--/ end=/-->/ contains=@Spell
+
+" Heading
+syn match twHeading /^!\+\s*.*$/ contains=@Spell
+
+" Emphasis
+syn match twItalic /\/\/.\{-}\/\// contains=@Spell
+syn match twBold /''.\{-}''/ contains=@Spell
+syn match twUnderline /__.\{-}__/ contains=@Spell
+syn match twStrikethrough /--.\{-}--/ contains=@Spell
+syn match twHighlight /@@.\{-}@@/
+syn match twNoFormatting /{{{.\{-}}}}/ contains=@Spell
+syn match twCodeblockTag /^```\i*$/
+syn match twCode /`[^`]\+`/
 
 """ Highlighting
 
