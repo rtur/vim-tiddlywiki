@@ -34,7 +34,7 @@ syn keyword twRulesValue macrocallblock quoteblock styleblock table contained
 syn keyword twRulesValue transcludeblock typedblock contained
 
 " Macros
-syn match twMacro /<<.\{-}>>/ contains=twStringDouble,twStringSingle
+syn region twMacro start=/<<\i\+/ end=/>>/ contains=twStringTriple,twStringDouble,twStringSingle
 syn match twMacroDefineStart /^\s*\\define\s\+\i\+(\i*)/ contains=twMacroDefineName
 syn match twMacroDefineName /\i\+(\i*)/ contained contains=twMacroDefineArg
 syn region twMacroDefineArg start=/(/ms=s+1 end=/)/me=e-1 contained
@@ -46,20 +46,21 @@ syn match twFieldsLine /^\i\+:\s\+.*$/ contains=twFieldsKey
 syn match twFieldsKey /^\i\+:/ contained
 
 " Widgets
-syn region twWidgetStartTag start=/<\$\=\i\+/ end=/>/ contains=twWidgetAttr,twMacro,twTransclude,twStringDouble,twStringSingle
+syn region twWidgetStartTag start=/<\$\=\i\+/ end=/>/ contains=twWidgetAttr,twMacro,twTransclude,twStringTriple,twStringDouble,twStringSingle
 syn match  twWidgetAttr /\s\i\+=/ contained
 syn match  twWidgetEndTag /<\/$\=\i\+>/
 
 " Strings
 syn match twStringSingle /'[^']*'/ contained extend contains=@Spell
 syn match twStringDouble /"[^"]*"/ contained extend contains=@Spell
+syn region twStringTriple start=/"""/ end=/"""/ contained contains=@Spell,@twFormatting
 syn match twTransclude /{{[^{}]\{-}}}/
 
 " Link
 syn region twLink start=/\[\[/ end=/\]\]/
 syn match twCamelCaseLink /[^~]\<[A-Z][a-z0-9]\+[A-Z][[:alnum:]]*\>/
 syn match twUrlLink /\<\(https\=\|ftp\|file\):\S*/
-syn match twImgLink /\[img.\{-}\[.\{-}\]\]/ contains=twWidgetAttr,twStringDouble,twStringSingle
+syn match twImgLink /\[img.\{-}\[.\{-}\]\]/ contains=twWidgetAttr,twStringTriple,twStringDouble,twStringSingle
 
 " Table
 syn match twTable /|/
@@ -88,8 +89,16 @@ syn match twUnderline /__.\{-}__/ contains=@Spell
 syn match twStrikethrough /--.\{-}--/ contains=@Spell
 syn match twHighlight /@@.\{-}@@/
 syn match twNoFormatting /{{{.\{-}}}}/ contains=@Spell
-syn match twCodeblockTag /^```\i*$/
 syn match twCode /`[^`]\+`/
+syn region twCodeblockTag start=/^```\i*/ end=/^```/ contains=@Spell
+
+""" Clusters
+syn cluster twFormatting contains=twTransclude,twLink,twCamelCaseLink,
+syn cluster twFormatting add=twUrlLink,twImgLink,twTable,twBlockquote,
+syn cluster twFormatting add=twDefinitionListTerm,twDefinitionListDescription,
+syn cluster twFormatting add=twHeading,twItalic,twBold,twUnderline,
+syn cluster twFormatting add=twStrikethrough,twHighlight,twNoFormatting,
+syn cluster twFormatting add=twCode,twCodeblockTag,twComment
 
 """ Highlighting
 
@@ -119,6 +128,7 @@ hi def link twWidgetAttr Identifier
 hi def link twWidgetEndTag Structure
 hi def link twStringSingle String
 hi def link twStringDouble String
+hi def link twStringTriple String
 hi def link twFieldsLine String
 hi def link twFieldsKey Identifier
 hi def link twMacro Label
