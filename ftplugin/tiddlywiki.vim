@@ -31,13 +31,14 @@ endfunction
 
 function! s:InitializeTemplate()
   let timestamp = TiddlyWikiTime()
-  call append(0, "modified: " . timestamp)
-  call append(1, "created: " . timestamp)
-  call append(2, "modifier: ")
-  call append(3, "creator: ")
+  call append(0, "created: " . timestamp)
+  call append(1, "creator: ")
+  call append(2, "modified: " . timestamp)
+  call append(3, "modifier: ")
   call append(4, "title: ")
   call append(5, "tags: ")
-  call append(6, "")
+  call append(6, "type: text/vnd.tiddlywiki")
+  call append(7, "")
 endfunction
 
 if exists("g:tiddlywiki_autoupdate")
