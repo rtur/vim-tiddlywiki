@@ -1,0 +1,45 @@
+This is a fork of http://www.vim.org/scripts/script.php?script_id=2705
+
+For people who like the TiddlyWiki formatting syntax.
+
+http://tiddlywiki.org/wiki/TiddlyWiki_Markup
+
+It has since been highly customized and updated.
+
+This plugin provides syntax highlighting for tiddlywiki files (`*.tid`) as well
+as some helpers for editing TiddlyWiki files. It is probably best used in 
+conjunction with [TiddlyWiki Bob](https://github.com/OokTech/TW5-Bob), since it 
+is designed to smoothly handle tiddlers being changed both via TiddlyWiki as
+well as directly on the file system.
+
+
+# Usage
+
+
+## Provided Commands
+
+* `TiddlyWikiUpdateMetadata` : Update the 'modifier' and 'modified' fields in the current tiddler's metadata.
+* `TiddlyWikiInitializeTemplate` : Insert tiddler metadata (timestamps, creator / modifier / title) at the top of the file
+
+## Default Mappings
+
+```
+nmap <Leader>tm :TiddlyWikiUpdateMetadata<Cr>
+nmap <Leader>tt :TiddlyWikiInitializeTemplate<Cr>
+```
+
+## Configuration
+
+```
+" Explicitly set the username of the tiddler 'creator' and 'modifier'
+" If not set, this defaults to `$USER` or `$LOGNAME` (in that order)
+let g:tiddlywiki_author = 'thisisme'
+
+" Disable the default mappings
+let g:tiddlywiki_no_mappings=1
+
+" Automatically update tiddler metadata ('modified' timestamp, 'modifier' 
+" username) on write
+let g:tiddlywiki_autoupdate=1
+```
+
