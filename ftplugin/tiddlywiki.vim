@@ -32,9 +32,12 @@ endfunction
 function! s:TiddlyWikiUser()
   if exists('g:tiddlywiki_author')
     return g:tiddlywiki_author
-  else
+  elseif $USER !=# ''
     " Fall back to OS username
     return $USER
+  else
+    " Contains the username in termux/android (among other systems probably)
+    return $LOGNAME
   endif
 endfunction
 
@@ -63,9 +66,16 @@ if exists("g:tiddlywiki_autoupdate")
   augroup END
 endif
 
+" Define commands, allowing the user to define custom mappings
+command -nargs=0 TiddlyWikiUpdateMetadata call <SID>UpdateModifiedTime()
+command -nargs=0 TiddlyWikiInitializeTemplate call <SID>InitializeTemplate()
+
+" Define some default mappings unless disabled
 if !exists("g:tiddlywiki_no_mappings")
-  nmap <Leader>tm :call <SID>UpdateModifiedTime()<Cr>
-  nmap <Leader>tt :call <SID>InitializeTemplate()<Cr>
+  nmap <Leader>tm :TiddlyWikiUpdateMetadata<Cr>
+  nmap <Leader>tt :TiddlyWikiInitializeTemplate<Cr>
 endif
+
+
 
 let &cpo = s:save_cpo
