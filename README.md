@@ -39,6 +39,7 @@ The `TiddlyWikiEditTiddler` command looks for tiddlers in the following location
 nmap <Leader>tm :TiddlyWikiUpdateMetadata<Cr>
 nmap <Leader>tt :TiddlyWikiInitializeTemplate<Cr>
 nmap <Leader>te :TiddlyWikiEditTiddler<Space>
+nmap <Leader>tE :vsplit<cr>:TiddlyWikiEditTiddler<Space>
 ```
 
 
