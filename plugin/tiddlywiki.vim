@@ -68,7 +68,7 @@ command -nargs=1 TiddlyWikiEditTiddler call <SID>EditOrCreate('<args>')
 
 " Define some default mappings unless disabled
 if !exists("g:tiddlywiki_no_mappings")
-  nmap <Leader>to :TiddlyWikiEditTiddler<Space>
+  nmap <Leader>te :TiddlyWikiEditTiddler<Space>
 endif
 
 
