@@ -23,7 +23,7 @@ well as directly on the file system.
 * `TiddlyWikiEditTiddler <name>` : Open the tiddler with that name (without '.tid' extension) or create it if it doesn't exist
 
 The `TiddlyWikiEditTiddler` command looks for tiddlers in the following locations (in that order):
-* If `g:tiddlywiki_dir is set`:
+* If `g:tiddlywiki_dir` is set:
   * `g:tiddlywiki_dir/`
   * `g:tiddlywiki_dir/tiddlers/`
 * Otherwise:
