@@ -47,12 +47,12 @@ endfunction
 " Open the tiddler with the given name. If it doesn't exist, create and
 " initialize it
 function! s:EditOrCreate(name)
-  if s:TiddlyWikiDir() == ''
+  let tiddler_dir = s:TiddlyWikiDir()
+  if tiddler_dir == ''
     return
   endif
 
-  let fqn = s:tiddlywiki_dir . a:name . '.tid'
-  "silent execute 'echom ' . fqn
+  let fqn = tiddler_dir . a:name . '.tid'
   execute 'edit ' . fqn
 
   if ! filereadable(fqn)
