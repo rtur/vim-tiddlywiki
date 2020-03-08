@@ -21,8 +21,9 @@ well as directly on the file system.
 * `TiddlyWikiUpdateMetadata` : Update the 'modifier' and 'modified' fields in the current tiddler's metadata.
 * `TiddlyWikiInitializeTemplate` : Insert tiddler metadata (timestamps, creator / modifier / title) at the top of the file
 * `TiddlyWikiEditTiddler <name>` : Open the tiddler with that name (without '.tid' extension) or create it if it doesn't exist
+* `TiddlyWikiEditJournal : Open the journal tiddler for today or create it if it doesn't exist
 
-The `TiddlyWikiEditTiddler` command looks for tiddlers in the following locations (in that order):
+The `TiddlyWikiEdit...` commands look for tiddlers in the following locations (in that order):
 * If `g:tiddlywiki_dir` is set:
   * `g:tiddlywiki_dir/`
   * `g:tiddlywiki_dir/tiddlers/`
@@ -40,6 +41,8 @@ nmap <Leader>tm :TiddlyWikiUpdateMetadata<Cr>
 nmap <Leader>tt :TiddlyWikiInitializeTemplate<Cr>
 nmap <Leader>te :TiddlyWikiEditTiddler<Space>
 nmap <Leader>tE :vsplit<cr>:TiddlyWikiEditTiddler<Space>
+nmap <Leader>tj :TiddlyWikiEditJournal<Cr>
+nmap <Leader>tJ :vsplit<cr>:TiddlyWikiEditJournal<Cr>
 ```
 
 
@@ -50,8 +53,15 @@ nmap <Leader>tE :vsplit<cr>:TiddlyWikiEditTiddler<Space>
 " If not set, this defaults to `$USER` or `$LOGNAME` (in that order)
 let g:tiddlywiki_author = 'thisisme'
 
-" Specify the location of your tiddlers. The subdir "tiddlers" is appended automatically if required.
+" Specify the location of your tiddlers. The subdir "tiddlers" is appended 
+" automatically if required.
 let g:tiddlywiki_dir = '~/docs/notes/wiki'
+
+" Set the date format to use for journal tiddlers, as in the format string of date(1).
+" This does not have to be at 'day' granularity - you can also use 
+" months / weeks / hours / whatever makes sense to you.
+" Defaults to '%F' (ISO date = yyyy-mm-dd)
+let g:tiddlywiki_journal_format = '%A, %F (Week %V)'
 
 " Disable the default mappings
 let g:tiddlywiki_no_mappings=1

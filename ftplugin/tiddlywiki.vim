@@ -49,7 +49,7 @@ function! s:AutoUpdateModifiedTime()
   endif
 endfunction
 
-function! s:InitializeTemplate()
+function! s:InitializeTemplate(tags)
   let timestamp = TiddlyWikiTime()
   call append(0, "created: " . timestamp)
   call append(1, "creator: " . s:TiddlyWikiUser())
@@ -57,7 +57,7 @@ function! s:InitializeTemplate()
   call append(3, "modifier: " . s:TiddlyWikiUser())
   " Title defaults to filename without extension
   call append(4, "title: " . expand('%:t:r')) 
-  call append(5, "tags: ")
+  call append(5, "tags: " . join(a:tags, ' '))
   call append(6, "type: text/vnd.tiddlywiki")
   call append(7, "")
 endfunction
@@ -77,7 +77,8 @@ endif
 
 " Define commands, allowing the user to define custom mappings
 command! -nargs=0 TiddlyWikiUpdateMetadata call <SID>UpdateModifiedTime()
-command! -nargs=0 TiddlyWikiInitializeTemplate call <SID>InitializeTemplate()
+command! -nargs=0 TiddlyWikiInitializeTemplate call <SID>InitializeTemplate([])
+command! -nargs=0 TiddlyWikiInitializeJournal call <SID>InitializeTemplate(['Journal'])
 
 " Define some default mappings unless disabled
 if !exists("g:tiddlywiki_no_mappings")
