@@ -20,13 +20,28 @@ well as directly on the file system.
 
 * `TiddlyWikiUpdateMetadata` : Update the 'modifier' and 'modified' fields in the current tiddler's metadata.
 * `TiddlyWikiInitializeTemplate` : Insert tiddler metadata (timestamps, creator / modifier / title) at the top of the file
+* `TiddlyWikiEditTiddler <name>` : Open the tiddler with that name (without '.tid' extension) or create it if it doesn't exist
+
+The `TiddlyWikiEditTiddler` command looks for tiddlers in the following locations (in that order):
+* If `g:tiddlywiki_dir` is set:
+  * `g:tiddlywiki_dir/`
+  * `g:tiddlywiki_dir/tiddlers/`
+* Otherwise:
+  * `./`
+  * `./tiddlers/`
+  * `~/wiki/`
+  * `~/wiki/tiddlers/`
+
 
 ## Default Mappings
 
 ```
 nmap <Leader>tm :TiddlyWikiUpdateMetadata<Cr>
 nmap <Leader>tt :TiddlyWikiInitializeTemplate<Cr>
+nmap <Leader>te :TiddlyWikiEditTiddler<Space>
+nmap <Leader>tE :vsplit<cr>:TiddlyWikiEditTiddler<Space>
 ```
+
 
 ## Configuration
 
@@ -34,6 +49,9 @@ nmap <Leader>tt :TiddlyWikiInitializeTemplate<Cr>
 " Explicitly set the username of the tiddler 'creator' and 'modifier'
 " If not set, this defaults to `$USER` or `$LOGNAME` (in that order)
 let g:tiddlywiki_author = 'thisisme'
+
+" Specify the location of your tiddlers. The subdir "tiddlers" is appended automatically if required.
+let g:tiddlywiki_dir = '~/docs/notes/wiki'
 
 " Disable the default mappings
 let g:tiddlywiki_no_mappings=1

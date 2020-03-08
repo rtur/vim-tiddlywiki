@@ -12,6 +12,8 @@ let b:did_ftplugin = 1
 let s:save_cpo = &cpo
 set cpo-=C
 
+
+
 function! TiddlyWikiTime()
   return system("date -u +'%Y%m%d%H%M%S'")[:-2] . "000"
 endfunction
@@ -54,17 +56,24 @@ function! s:InitializeTemplate()
   call append(2, "modified: " . timestamp)
   call append(3, "modifier: " . s:TiddlyWikiUser())
   " Title defaults to filename without extension
-  call append(4, "title: " . expand('%:r')) 
+  call append(4, "title: " . expand('%:t:r')) 
   call append(5, "tags: ")
   call append(6, "type: text/vnd.tiddlywiki")
   call append(7, "")
 endfunction
+
+
+
 
 if exists("g:tiddlywiki_autoupdate")
   augroup tiddlywiki
     au BufWrite, *.tid call <SID>AutoUpdateModifiedTime()
   augroup END
 endif
+
+
+
+
 
 " Define commands, allowing the user to define custom mappings
 command! -nargs=0 TiddlyWikiUpdateMetadata call <SID>UpdateModifiedTime()
