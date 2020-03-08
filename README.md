@@ -21,7 +21,7 @@ well as directly on the file system.
 * `TiddlyWikiUpdateMetadata` : Update the 'modifier' and 'modified' fields in the current tiddler's metadata.
 * `TiddlyWikiInitializeTemplate` : Insert tiddler metadata (timestamps, creator / modifier / title) at the top of the file
 * `TiddlyWikiEditTiddler <name>` : Open the tiddler with that name (without '.tid' extension) or create it if it doesn't exist
-* `TiddlyWikiEditJournal : Open the journal tiddler for today or create it if it doesn't exist
+* `TiddlyWikiEditJournal` : Open the journal tiddler for today or create it if it doesn't exist
 
 The `TiddlyWikiEdit...` commands look for tiddlers in the following locations (in that order):
 * If `g:tiddlywiki_dir` is set:
