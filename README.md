@@ -22,6 +22,7 @@ well as directly on the file system.
 * `TiddlyWikiInitializeTemplate` : Insert tiddler metadata (timestamps, creator / modifier / title) at the top of the file
 * `TiddlyWikiEditTiddler <name>` : Open the tiddler with that name (without '.tid' extension) or create it if it doesn't exist
 * `TiddlyWikiEditJournal` : Open the journal tiddler for today or create it if it doesn't exist
+* `TiddlyWikiOpenLink` : Open the link under the cursor
 
 The `TiddlyWikiEdit...` commands look for tiddlers in the following locations (in that order):
 * If `g:tiddlywiki_dir` is set:
@@ -43,6 +44,7 @@ nmap <Leader>te :TiddlyWikiEditTiddler<Space>
 nmap <Leader>tE :vsplit<cr>:TiddlyWikiEditTiddler<Space>
 nmap <Leader>tj :TiddlyWikiEditJournal<Cr>
 nmap <Leader>tJ :vsplit<cr>:TiddlyWikiEditJournal<Cr>
+nmap <Leader>to :TiddlyWikiOpenLink<Cr>
 ```
 
 

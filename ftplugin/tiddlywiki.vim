@@ -63,6 +63,59 @@ function! s:InitializeTemplate(tags)
 endfunction
 
 
+" Get the [[link]] / WikiLink under the cursor or an empty string if there
+" isn't any. Uses the syntax definitions.
+function! s:GetLink()
+  let cline = line('.')
+  let ccol = col('.')
+  let synid = synID(cline, ccol, 0)
+  let synname = synIDattr(synid, "name")
+
+  " if the cursor is not on a link, return empty string
+  if (synname !=# 'twLink') && (synname !=# 'twCamelCaseLink')
+    return ''
+  endif
+
+  " scan backward and forward in the line to find the link boundaries
+  let startcol = ccol
+  let endcol = ccol
+
+  let c = ccol
+  while synID(cline, c, 0) == synid
+    let startcol = c
+    let c = c - 1
+  endwhile
+
+  let c = ccol
+  while synID(cline, c, 0) == synid
+    let endcol = c
+    let c = c + 1
+  endwhile
+
+  " extract the link token
+  let linkstr = strpart(getline('.'), startcol - 1, (endcol - startcol) + 1)
+
+  " ... and the link itself
+  if synname == 'twLink'
+    return strpart(linkstr, 2, strlen(linkstr) - 4)
+  else
+    return linkstr
+  endif
+endfunction
+
+
+
+
+" Get the [[link]] / WikiLink under the cursor and open it
+function s:OpenLinkUnderCursor()
+  let link = s:GetLink()
+
+  if link == ''
+    return "echom 'Cursor is not on a link'"
+  else
+    return 'TiddlyWikiEditTiddler ' . link
+  endif
+endfunction
 
 
 if exists("g:tiddlywiki_autoupdate")
@@ -79,11 +132,13 @@ endif
 command! -nargs=0 TiddlyWikiUpdateMetadata call <SID>UpdateModifiedTime()
 command! -nargs=0 TiddlyWikiInitializeTemplate call <SID>InitializeTemplate([])
 command! -nargs=0 TiddlyWikiInitializeJournal call <SID>InitializeTemplate(['Journal'])
+command! -nargs=0 TiddlyWikiOpenLink execute <sid>OpenLinkUnderCursor()
 
 " Define some default mappings unless disabled
 if !exists("g:tiddlywiki_no_mappings")
   nmap <Leader>tm :TiddlyWikiUpdateMetadata<Cr>
   nmap <Leader>tt :TiddlyWikiInitializeTemplate<Cr>
+  nmap <Leader>to :TiddlyWikiOpenLink<Cr>
 endif
 
 
