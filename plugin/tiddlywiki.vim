@@ -79,7 +79,6 @@ function! s:EditOrCreateJournal()
 
   let name = GetJournalTiddlerName()
   let fqn = s:TiddlyWikiDir() . name . '.tid'
-  "execute 'echom ' . fqn
   execute 'edit ' . fqn
 
   if ! filereadable(fqn)
@@ -89,8 +88,8 @@ endfunction
 
 
 " Define commands, allowing the user to define custom mappings
-command -nargs=1 TiddlyWikiEditTiddler call <SID>EditOrCreate('<args>')
-command -nargs=0 TiddlyWikiEditJournal call <SID>EditOrCreateJournal() 
+command! -nargs=1 TiddlyWikiEditTiddler call <SID>EditOrCreate('<args>')
+command! -nargs=0 TiddlyWikiEditJournal call <SID>EditOrCreateJournal() 
 
 " Define some default mappings unless disabled
 if !exists("g:tiddlywiki_no_mappings")
