@@ -20,7 +20,7 @@ well as directly on the file system.
 
 * `TiddlyWikiUpdateMetadata` : Update the 'modifier' and 'modified' fields in the current tiddler's metadata.
 * `TiddlyWikiInitializeTemplate` : Insert tiddler metadata (timestamps, creator / modifier / title) at the top of the file
-* `TiddlyWikiEditTiddler <name>` : Open the tiddler with that name (without '.tid' extension) or create it if it doesn't exist. Has completion for the tiddler name.
+* `TiddlyWikiEditTiddler <name>` : Open the tiddler with that name (without '.tid' extension) or create it if it doesn't exist.
 * `TiddlyWikiEditJournal` : Open the journal tiddler for today or create it if it doesn't exist
 * `TiddlyWikiOpenLink` : Open the link under the cursor
 
@@ -33,6 +33,10 @@ The `TiddlyWikiEdit...` commands look for tiddlers in the following locations (i
   * `./tiddlers/`
   * `~/wiki/`
   * `~/wiki/tiddlers/`
+
+The `TiddlyWikiEdit` command has completion for the tiddler name.
+In addition, if you call it without arguments and have [fzf](https://github.com/junegunn/fzf)
+installed, you will get extra fancy completion.
 
 
 ## Default Mappings

@@ -61,6 +61,20 @@ function! s:EditOrCreate(name)
     return
   endif
 
+  if a:name == '' 
+    if exists('*fzf#run')
+      call fzf#run({
+            \ 'source': s:EditTiddlerComplete('', '', 0),
+            \ 'sink': 'TiddlyWikiEditTiddler',
+            \ 'down': '40%'
+            \ })
+    else
+      echom "no tiddler name given and no fzf available for fancy completion"
+    endif
+
+    return
+  endif
+
   let fqn = tiddler_dir . a:name . '.tid'
   execute 'edit ' . fqn
 
@@ -98,7 +112,7 @@ endfunction
 
 " Define commands, allowing the user to define custom mappings
 command! -complete=customlist,s:EditTiddlerComplete 
-       \ -nargs=1 TiddlyWikiEditTiddler call <SID>EditOrCreate('<args>')
+       \ -nargs=? TiddlyWikiEditTiddler call <SID>EditOrCreate('<args>')
 command! -nargs=0 TiddlyWikiEditJournal call <SID>EditOrCreateJournal() 
 
 " Define some default mappings unless disabled
