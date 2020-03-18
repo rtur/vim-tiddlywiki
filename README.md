@@ -20,7 +20,7 @@ well as directly on the file system.
 
 * `TiddlyWikiUpdateMetadata` : Update the 'modifier' and 'modified' fields in the current tiddler's metadata.
 * `TiddlyWikiInitializeTemplate` : Insert tiddler metadata (timestamps, creator / modifier / title) at the top of the file
-* `TiddlyWikiEditTiddler <name>` : Open the tiddler with that name (without '.tid' extension) or create it if it doesn't exist
+* `TiddlyWikiEditTiddler <name>` : Open the tiddler with that name (without '.tid' extension) or create it if it doesn't exist. Has completion for the tiddler name.
 * `TiddlyWikiEditJournal` : Open the journal tiddler for today or create it if it doesn't exist
 * `TiddlyWikiOpenLink` : Open the link under the cursor
 

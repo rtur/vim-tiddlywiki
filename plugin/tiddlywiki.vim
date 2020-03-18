@@ -87,8 +87,18 @@ function! s:EditOrCreateJournal()
 endfunction
 
 
+" Completion func for TiddlyWikiEditTiddler
+function! s:EditTiddlerComplete(ArgLead, CmdLine, CursorPos)
+  let dir = s:TiddlyWikiDir()
+  let fqns = globpath(dir, a:ArgLead . '*.tid', 1, 1)
+  let files = map(fqns, 'strpart(v:val, strridx(v:val, "/") +1)')
+  return map(files, 'strpart(v:val, 0, strridx(v:val, "."))')
+endfunction
+
+
 " Define commands, allowing the user to define custom mappings
-command! -nargs=1 TiddlyWikiEditTiddler call <SID>EditOrCreate('<args>')
+command! -complete=customlist,s:EditTiddlerComplete 
+       \ -nargs=1 TiddlyWikiEditTiddler call <SID>EditOrCreate('<args>')
 command! -nargs=0 TiddlyWikiEditJournal call <SID>EditOrCreateJournal() 
 
 " Define some default mappings unless disabled
