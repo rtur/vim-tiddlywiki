@@ -78,7 +78,7 @@ function! s:EditOrCreate(name)
   let fqn = tiddler_dir . a:name . '.tid'
   execute 'edit ' . fqn
 
-  if ! filereadable(fqn)
+  if ! filereadable(expand(fqn))
     TiddlyWikiInitializeTemplate
   endif
 endfunction
