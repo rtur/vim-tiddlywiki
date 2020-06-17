@@ -16,14 +16,14 @@ set cpo-=C
 
 function! TiddlyWikiTime()
   let l:ts = system("date -u +'%Y%m%d%H%M%S'")[:-2] . "000"
+  " on windows/powershell 'date' returns its result as UTF-16 and vim doesn't
+  " automatically recognize it => we have to strip the "garbage"
   return substitute(l:ts, '\v[^0-9]', '', 'g')
 endfunction
 
 " Update the 'modified:' and 'modifier' values in the header
 function! s:UpdateModifiedTime()
   let save_cursor = getcurpos()
-  "silent 0,/^\s*$/global/^modified: / delete
-  "call append(0, "modified: " . TiddlyWikiTime())
   silent execute "0,7s/\\vmodified.*$/modified: " . TiddlyWikiTime() . "/"
   silent execute "0,7s/\\vmodifier.*$/modifier: " . s:TiddlyWikiUser() . "/"
   call setpos('.', save_cursor)
