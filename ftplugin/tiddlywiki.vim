@@ -15,7 +15,8 @@ set cpo-=C
 
 
 function! TiddlyWikiTime()
-  return system("date -u +'%Y%m%d%H%M%S'")[:-2] . "000"
+  let l:ts = system("date -u +'%Y%m%d%H%M%S'")[:-2] . "000"
+  return substitute(l:ts, '\v[^0-9]', '', 'g')
 endfunction
 
 " Update the 'modified:' and 'modifier' values in the header
