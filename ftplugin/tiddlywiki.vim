@@ -119,6 +119,28 @@ function s:OpenLinkUnderCursor()
 endfunction
 
 
+" Insert a link to the tiddler with the given name.
+function! s:InsertLink(name)
+  let tiddler_dir = tiddlywiki#TiddlyWikiDir()
+  if tiddler_dir == ''
+    return
+  endif
+
+  if a:name == '' 
+    call tiddlywiki#FuzzyFindTiddler(function('s:InsertLink'))
+    return
+  endif
+
+  let line = getline('.')
+  let pos = col('.')-1
+  let fqn = '[[' . a:name . ']]'
+  let line = line[:pos-1] . fqn . line[pos:]
+  call setline('.', line)
+  call setpos('.', [0, line('.'), pos + strlen(fqn) + 1, 0])
+endfunction
+
+
+
 if exists("g:tiddlywiki_autoupdate")
   augroup tiddlywiki
     au BufWrite, *.tid call <SID>AutoUpdateModifiedTime()
@@ -134,12 +156,15 @@ command! -nargs=0 TiddlyWikiUpdateMetadata call <SID>UpdateModifiedTime()
 command! -nargs=0 TiddlyWikiInitializeTemplate call <SID>InitializeTemplate([])
 command! -nargs=0 TiddlyWikiInitializeJournal call <SID>InitializeTemplate(['Journal'])
 command! -nargs=0 TiddlyWikiOpenLink execute <sid>OpenLinkUnderCursor()
+command! -complete=customlist,tiddlywiki#CompleteTiddlerName
+       \ -nargs=? TiddlyWikiInsertLink call <SID>InsertLink('<args>')
 
 " Define some default mappings unless disabled
 if !exists("g:tiddlywiki_no_mappings")
   nmap <Leader>tm :TiddlyWikiUpdateMetadata<Cr>
   nmap <Leader>tt :TiddlyWikiInitializeTemplate<Cr>
   nmap <Leader>to :TiddlyWikiOpenLink<Cr>
+  nmap <Leader>tl :TiddlyWikiInsertLink<space>
 endif
 
 

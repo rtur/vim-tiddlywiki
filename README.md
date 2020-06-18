@@ -23,8 +23,9 @@ well as directly on the file system.
 * `TiddlyWikiEditTiddler <name>` : Open the tiddler with that name (without '.tid' extension) or create it if it doesn't exist.
 * `TiddlyWikiEditJournal` : Open the journal tiddler for today or create it if it doesn't exist
 * `TiddlyWikiOpenLink` : Open the link under the cursor
+* `TiddlyWikiInsertLink <name>` : Insert a link to the given tiddler at the cursor position.
 
-The `TiddlyWikiEdit...` commands look for tiddlers in the following locations (in that order):
+The `...Edit...` and `...InsertLink` commands look for tiddlers in the following locations (in that order):
 * If `g:tiddlywiki_dir` is set:
   * `g:tiddlywiki_dir/`
   * `g:tiddlywiki_dir/tiddlers/`
@@ -34,8 +35,8 @@ The `TiddlyWikiEdit...` commands look for tiddlers in the following locations (i
   * `~/wiki/`
   * `~/wiki/tiddlers/`
 
-The `TiddlyWikiEdit` command has completion for the tiddler name.
-In addition, if you call it without arguments and have [fzf](https://github.com/junegunn/fzf)
+The `TiddlyWikiEditTiddler` and `TiddlyWikiInsertLink` commands have completion for the tiddler name.
+In addition, if you call them without arguments and have [fzf](https://github.com/junegunn/fzf)
 installed, you will get extra fancy completion.
 
 
@@ -49,6 +50,7 @@ nmap <Leader>tE :vsplit<cr>:TiddlyWikiEditTiddler<Space>
 nmap <Leader>tj :TiddlyWikiEditJournal<Cr>
 nmap <Leader>tJ :vsplit<cr>:TiddlyWikiEditJournal<Cr>
 nmap <Leader>to :TiddlyWikiOpenLink<Cr>
+nmap <Leader>tl :TiddlyWikiInsertLink<Space>
 ```
 
 

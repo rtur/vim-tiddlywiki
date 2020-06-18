@@ -5,73 +5,16 @@
 " License: http://www.apache.org/licenses/LICENSE-2.0.txt
 
 
-
-" check if the given dir contains at least one system tiddler
-function! s:HasSystemTiddlers(dir) 
-  return len(globpath(a:dir, '$__*.tid', 1, 1)) > 0
-endfunction
-
-" Determine the dir containing all tiddlers
-function! s:TiddlyWikiDir()
-  if exists("s:tiddlywiki_dir")
-    if s:tiddlywiki_dir == ''
-      echom 'ERROR: tiddler dir could not be determined'
-    endif
-    return s:tiddlywiki_dir
-  endif
-
-  let candidates = []
-
-  if exists("g:tiddlywiki_dir")
-    let candidates = [g:tiddlywiki_dir, g:tiddlywiki_dir . '/tiddlers']
-  else
-    let candidates = ['.', './tiddlers', '~/wiki', '~/wiki/tiddlers']
-  endif
-
-  for candidate in candidates
-    let abs = fnamemodify(candidate, ':p')
-    if(s:HasSystemTiddlers(abs))
-      silent echom "Tiddler dir = <"  abs  ">"
-      let s:tiddlywiki_dir = abs
-      return abs
-    endif
-  endfor
-
-  echom 'ERROR: tiddler dir could not be determined'
-  return ''
-endfunction
-
-
-" Get the name for the journal tiddler for right now
-function! GetJournalTiddlerName()
-  if exists('g:tiddlywiki_journal_format')
-    let fmt = g:tiddlywiki_journal_format
-  else
-    let fmt = '%F'
-  endif
-
-  return trim(system("date +'" . fmt . "'"))
-endfunction
-
 " Open the tiddler with the given name. If it doesn't exist, create and
 " initialize it
 function! s:EditOrCreate(name)
-  let tiddler_dir = s:TiddlyWikiDir()
+  let tiddler_dir = tiddlywiki#TiddlyWikiDir()
   if tiddler_dir == ''
     return
   endif
 
   if a:name == '' 
-    if exists('*fzf#run')
-      call fzf#run({
-            \ 'source': s:EditTiddlerComplete('', '', 0),
-            \ 'sink': 'TiddlyWikiEditTiddler',
-            \ 'down': '40%'
-            \ })
-    else
-      echom "no tiddler name given and no fzf available for fancy completion"
-    endif
-
+    call tiddlywiki#FuzzyFindTiddler('TiddlyWikiEditTiddler')
     return
   endif
 
@@ -87,12 +30,12 @@ endfunction
 " Open the journal tiddler for today. If it doesn't exist, create and
 " initialize it
 function! s:EditOrCreateJournal()
-  if s:TiddlyWikiDir() == ''
+  if tiddlywiki#TiddlyWikiDir() == ''
     return
   endif
 
-  let name = GetJournalTiddlerName()
-  let fqn = s:TiddlyWikiDir() . name . '.tid'
+  let name = tiddlywiki#GetJournalTiddlerName()
+  let fqn = tiddlywiki#TiddlyWikiDir() . name . '.tid'
   execute 'edit ' . fqn
 
   if ! filereadable(fqn)
@@ -101,17 +44,10 @@ function! s:EditOrCreateJournal()
 endfunction
 
 
-" Completion func for TiddlyWikiEditTiddler
-function! s:EditTiddlerComplete(ArgLead, CmdLine, CursorPos)
-  let dir = s:TiddlyWikiDir()
-  let fqns = globpath(dir, a:ArgLead . '*.tid', 1, 1)
-  let files = map(fqns, 'strpart(v:val, strridx(v:val, "/") +1)')
-  return map(files, 'strpart(v:val, 0, strridx(v:val, "."))')
-endfunction
 
 
 " Define commands, allowing the user to define custom mappings
-command! -complete=customlist,s:EditTiddlerComplete 
+command! -complete=customlist,tiddlywiki#CompleteTiddlerName
        \ -nargs=? TiddlyWikiEditTiddler call <SID>EditOrCreate('<args>')
 command! -nargs=0 TiddlyWikiEditJournal call <SID>EditOrCreateJournal() 
 
