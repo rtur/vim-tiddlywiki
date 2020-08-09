@@ -168,5 +168,6 @@ if !exists("g:tiddlywiki_no_mappings")
 endif
 
 
+setlocal completefunc=tiddlywiki#UserCompletionFunc
 
 let &cpo = s:save_cpo

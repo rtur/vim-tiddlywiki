@@ -66,3 +66,28 @@ function! tiddlywiki#FuzzyFindTiddler(sink)
     echom "no tiddler name given and no fzf available for fancy completion"
   endif
 endfunction
+
+
+" Main omnifunc body
+function! tiddlywiki#UserCompletionFunc(findstart, base)
+  if a:findstart 
+    echom "completion: findstart"
+    let line = getline('.')
+    let start = col('.') - 1
+
+    while (start > 0) && 
+          \ ((line[start - 1] =~ '\a') || (line[start - 1] == '[')) &&
+          \ (strpart(line, start, 2) != '[[')
+      let start -= 1
+    endwhile
+
+    if strpart(line, start, 2) == '[['
+      return start
+    else
+      return -3
+    endif
+  else
+    echom "completion: base = '" . a:base . "'"
+    return -1
+  endif
+endfunction
