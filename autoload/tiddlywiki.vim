@@ -68,26 +68,7 @@ function! tiddlywiki#FuzzyFindTiddler(sink)
 endfunction
 
 
-" Main omnifunc body
+" Main completefunc body
 function! tiddlywiki#UserCompletionFunc(findstart, base)
-  if a:findstart 
-    echom "completion: findstart"
-    let line = getline('.')
-    let start = col('.') - 1
-
-    while (start > 0) && 
-          \ ((line[start - 1] =~ '\a') || (line[start - 1] == '[')) &&
-          \ (strpart(line, start, 2) != '[[')
-      let start -= 1
-    endwhile
-
-    if strpart(line, start, 2) == '[['
-      return start
-    else
-      return -3
-    endif
-  else
-    echom "completion: base = '" . a:base . "'"
-    return -1
-  endif
+  return tiddlywiki#completion#UserFunc(a:findstart, a:base)
 endfunction
