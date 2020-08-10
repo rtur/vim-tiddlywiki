@@ -66,3 +66,9 @@ function! tiddlywiki#FuzzyFindTiddler(sink)
     echom "no tiddler name given and no fzf available for fancy completion"
   endif
 endfunction
+
+
+" Main completefunc body
+function! tiddlywiki#UserCompletionFunc(findstart, base)
+  return tiddlywiki#completion#UserFunc(a:findstart, a:base)
+endfunction

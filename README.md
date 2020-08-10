@@ -40,6 +40,14 @@ In addition, if you call them without arguments and have [fzf](https://github.co
 installed, you will get extra fancy completion.
 
 
+## Completion
+
+The plugin contains a first user completion function that can be invoked in 
+insert mode via `<C-X><C-U>`. It can complete WikiWords and bracket `[[Links]]`
+(as long as both leading brackets are there). It is still rather rudimentary,
+but should still make things a lot easier.
+
+
 ## Default Mappings
 
 ```
