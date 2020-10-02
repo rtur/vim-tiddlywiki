@@ -1,6 +1,6 @@
 " check if the given dir contains at least one system tiddler
 function! s:HasSystemTiddlers(dir) 
-  return len(globpath(a:dir, '$__*.tid', 1, 1)) > 0
+  return len(globpath(a:dir, '*.tid', 1, 1)) > 0
 endfunction
 
 " Determine the dir containing all tiddlers
